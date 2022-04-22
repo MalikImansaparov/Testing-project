@@ -17,7 +17,6 @@ const dispatch = useDispatch()
   return (
     <div>
         <Navbar/>
-        <BookTabs/>
         <Routes>
         {publicRoutes.map((route) => (
             <Route

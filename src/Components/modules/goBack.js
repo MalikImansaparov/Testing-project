@@ -9,7 +9,7 @@ const ButtonWrapper = styled(Button)`
  padding: 0 20px;
  &:hover {
  color: #ffffff;
- background: #487349;
+ background: blue;
  }
 `
 

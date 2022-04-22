@@ -43,13 +43,11 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export const Navbar = styled('div')(
-    ({ theme }) => `
-    max-width: 100%,
-    height: 90px,
+export const NavWrap = styled('div')`
     display: flex,
     justify-content: space-between,
-    background: ${theme.palette.primary.main},
     `
-)
+export const Container = styled('div')`
+    width: 1300px;
+    `
 
