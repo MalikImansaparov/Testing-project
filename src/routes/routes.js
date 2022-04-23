@@ -4,7 +4,8 @@ import {BookTabs} from "../Components/bookTab/bookTab";
 import {AddBook} from "../pages/addBook/addBook";
 
 export const BASE_URL =
-  'https://api.itbook.store/1.0/search';
+  'https://my-json-server.typicode.com/carlosgustavo/api-react-book-dev-store/products';
+
 
 export const publicRoutes = [
   { path: '/book/:isbn13', component: EditBook },

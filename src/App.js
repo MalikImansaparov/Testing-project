@@ -11,7 +11,7 @@ const dispatch = useDispatch()
 
      useEffect(() => {
        dispatch(fetchAllBooks());
-       dispatch(fetchFrontBooks())
+       // dispatch(fetchFrontBooks())
      },[]);
 
   return (

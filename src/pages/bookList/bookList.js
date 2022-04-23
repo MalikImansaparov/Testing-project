@@ -14,12 +14,14 @@ import Badge from "@mui/material/Badge";
 import StarIcon from "@mui/icons-material/Star";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router";
+import {removeBook} from "../../store/booksSlice/bookSlice";
 
 
 export const BookList = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-  const bookData = useSelector((state) => state.allBooks.books);
+  const bookSelector = useSelector((state) => state.allBooks.books);
+  const bookData = Array.from(bookSelector)
     const handleClick = () => {
 
     }
@@ -41,15 +43,15 @@ export const BookList = () => {
       <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
         {bookData.map((book) => {
           return (
-                <Grid item xs={3} key={book.title}>
+                <Grid item xs={3} key={book.id}>
           <BookItem >
                     <Box sx={{display: 'flex'}}>
                         <BookImg src={book.image} alt='book'/>
                         <BookContent>
                             <PriceBook>{book.price}</PriceBook>
                             <StarBorderOutlinedIcon sx={{fontSize:'40px'}}/>
-                            <ModeEditOutlinedIcon onClick={() => navigate(`/book/${book.isbn13}`)} sx={{fontSize:'40px', my: '10px'}}/>
-                            <DeleteOutlinedIcon sx={{fontSize:'40px'}}/>
+                            <ModeEditOutlinedIcon onClick={() => navigate(`/book/${book.id}`)} sx={{fontSize:'40px', my:'10px'}}/>
+                            <DeleteOutlinedIcon onClick={() => dispatch(removeBook(book.id))} sx={{fontSize:'40px'}} />
                         </BookContent>
                     </Box>
               <BookTitle>{book.title}</BookTitle>

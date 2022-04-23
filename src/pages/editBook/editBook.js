@@ -16,6 +16,8 @@ import {
     SelectWrapper
 } from "../../Components/modules/formInput";
 import {CustomButton, PhotoWrapper} from "./style";
+import {addBook, clearBook} from "../../store/booksSlice/bookSlice";
+
 
 
 
@@ -31,7 +33,9 @@ const validationSchema = Yup.object({
 export const EditBook = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const productInfo = useSelector((state) => state.allBooks.books);
+    const id = useParams()
+    const productInfo = useSelector((state) => state.allBooks.book);
+    console.log(productInfo)
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
@@ -42,11 +46,14 @@ export const EditBook = () => {
         }
 
         useEffect(() => {
-
-        },[])
+           dispatch(addBook(id))
+            // return (() => {
+            //    dispatch(clearBook())
+            // })
+        },[dispatch, id])
 
     const initialValues = {
-        name: productInfo?.title,
+        firstName: productInfo?.title,
         picture: productInfo?.image,
         author: productInfo?.authors,
         price: productInfo?.price,
@@ -124,13 +131,13 @@ export const EditBook = () => {
                                     <Box sx={{ mb: '30px' }}>
                                         <LabelWrapper>Наименование</LabelWrapper>
                                         <InputWrapper
-                                            name="name"
+                                            name="firstName"
                                             onChange={handleChange}
                                             type="string"
-                                            value={values.name}
+                                            value={values.firstName}
                                             onBlur={handleBlur}
                                         />
-                                        {errors.name && touched.name && (
+                                        {errors.firstName && touched.firstName && (
                                             <Typography
                                                 sx={{
                                                     textAlign: 'left',
@@ -140,7 +147,7 @@ export const EditBook = () => {
                                                     ml: '14px',
                                                 }}
                                             >
-                                                {errors.name}
+                                                {errors.firstName}
                                             </Typography>
                                         )}
                                     </Box>
