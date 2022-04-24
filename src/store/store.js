@@ -11,7 +11,6 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import bookSlice from './booksSlice/bookSlice';
-import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 
 const rootReducer = combineReducers({
   allBooks: bookSlice,
@@ -19,9 +18,10 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
-  stateReconciler : autoMergeLevel1 ,
+  storage,
+
 }
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({

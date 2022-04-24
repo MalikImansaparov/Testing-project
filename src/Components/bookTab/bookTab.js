@@ -53,32 +53,19 @@ export const BookTabs = () => {
                 textColor="primary"
                 onChange={handleChange}
                 aria-label="disabled tabs example"
-                sx={{ my: '25px', fontSize: '20px' }}
+                sx={{ my: '20px', fontSize: '20px' }}
             >
-                <Tab label="Popular" sx={{mr: '30px', ml: '35px'}}/>
-                <Tab label="Frontend" sx={{mr: '30px'}}/>
-                <Tab label="Backend" sx={{mr: '30px'}}/>
-                <Tab label="Mobile" sx={{mr: '30px'}}/>
-                 <Tab label="Author" sx={{mr: '30px'}}/>
+                <Tab label="Programming" sx={{mr: '30px', ml: '35px'}}/>
+                <Tab label="Fiction" sx={{mr: '30px'}}/>
                  <CustomButton to='/book/add'>Add book</CustomButton>
             </Tabs>
                 </Box>
-
             <TabPanel value={value} index={0}>
                 <BookList/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <FrontBooks/>
             </TabPanel>
-            <TabPanel value={value} index={2}>
-                <FrontBooks/>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                <FrontBooks/>
-            </TabPanel>
-                <TabPanel value={value} index={4}>
-                    <FrontBooks/>
-                </TabPanel>
             </Grid>
         </Grid>
     );

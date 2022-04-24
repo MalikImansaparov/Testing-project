@@ -1,21 +1,24 @@
 import React, {useEffect} from "react";
-import {API_KEY, BASE_URL, publicRoutes} from "./routes/routes";
+import {publicRoutes} from "./routes/routes";
 import {Routes, Route} from "react-router";
 import {Navbar} from "./Components/header/header";
 import {useDispatch} from "react-redux";
 import {fetchAllBooks, fetchFrontBooks} from "./store/asyncAction";
-import {BookTabs} from "./Components/bookTab/bookTab";
+
 
  const App = () => {
 const dispatch = useDispatch()
+     const localStore = localStorage.getItem('persist:root').length
 
      useEffect(() => {
-       dispatch(fetchAllBooks());
-       // dispatch(fetchFrontBooks())
-     },[]);
+         if (localStore <= 175) {
+             dispatch(fetchAllBooks());
+             dispatch(fetchFrontBooks())
+         }
+     },[])
 
   return (
-    <div>
+    <>
         <Navbar/>
         <Routes>
         {publicRoutes.map((route) => (
@@ -26,7 +29,7 @@ const dispatch = useDispatch()
             />
         ))}
         </Routes>
-    </div>
+    </>
   );
 }
  export default App;

@@ -17,8 +17,7 @@ import {
 } from "../../Components/modules/formInput";
 import {CustomButton, PhotoWrapper} from "./style";
 import {addBook, clearBook} from "../../store/booksSlice/bookSlice";
-
-
+import {fetchBookId} from "../../store/asyncAction";
 
 
 const validationSchema = Yup.object({
@@ -33,32 +32,30 @@ const validationSchema = Yup.object({
 export const EditBook = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const id = useParams()
     const productInfo = useSelector((state) => state.allBooks.book);
     console.log(productInfo)
+    const id = useParams();
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
-    const handleSubmit = (values,{ setSubmitting }) => {
-            dispatch((values))
-            setSubmitting(false);
-            navigate(-1)
+    useEffect(() => {
+        dispatch(fetchBookId(id))
+        return () => {
+            dispatch(clearBook())
         }
+    },[dispatch])
 
-        useEffect(() => {
-           dispatch(addBook(id))
-            // return (() => {
-            //    dispatch(clearBook())
-            // })
-        },[dispatch, id])
+    const handleSubmit = (values,{ setSubmitting }) => {
+        dispatch((values))
+        setSubmitting(false);
+        navigate(-1)
+    }
 
     const initialValues = {
-        firstName: productInfo?.title,
-        picture: productInfo?.image,
-        author: productInfo?.authors,
+        title: productInfo?.title,
+        image: productInfo?.image,
+        description: productInfo?.description,
         price: productInfo?.price,
-        quantity: productInfo?.pages,
-        year: productInfo?.year,
     };
 
     return (
@@ -92,13 +89,13 @@ export const EditBook = () => {
                                         <label htmlFor="contained-button-file">
                                             <PhotoWrapper>
                                                 <InputWrap
-                                                    name="picture"
+                                                    name="image"
                                                     accept="image/*"
                                                     id="contained-button-file"
                                                     multiple
                                                     type="file"
                                                     onChange={(event) => {
-                                                        setFieldValue('picture', event.currentTarget.files[0])
+                                                        setFieldValue('image', event.currentTarget.files[0])
                                                         setSelectedImage(event.target.files[0])
                                                     }}
                                                 />
@@ -107,14 +104,14 @@ export const EditBook = () => {
                                                 ) : (
                                                     <PhotoWrap
                                                         component="img"
-                                                        src={values.picture}
+                                                        src={values.image}
                                                         alt=""
                                                     />
                                                 )}
                                                 <Typography>Изменить фото</Typography>
                                             </PhotoWrapper>
                                         </label>
-                                        {errors.picture && touched.picture && (
+                                        {errors.image && touched.image && (
                                             <Typography
                                                 sx={{
                                                     textAlign: 'left',
@@ -124,20 +121,20 @@ export const EditBook = () => {
                                                     ml: '14px',
                                                 }}
                                             >
-                                                {errors.picture}
+                                                {errors.image}
                                             </Typography>
                                         )}
                                     </Box>
                                     <Box sx={{ mb: '30px' }}>
                                         <LabelWrapper>Наименование</LabelWrapper>
                                         <InputWrapper
-                                            name="firstName"
+                                            name="title"
                                             onChange={handleChange}
                                             type="string"
-                                            value={values.firstName}
+                                            value={values.title}
                                             onBlur={handleBlur}
                                         />
-                                        {errors.firstName && touched.firstName && (
+                                        {errors.title && touched.title && (
                                             <Typography
                                                 sx={{
                                                     textAlign: 'left',
@@ -147,20 +144,20 @@ export const EditBook = () => {
                                                     ml: '14px',
                                                 }}
                                             >
-                                                {errors.firstName}
+                                                {errors.title}
                                             </Typography>
                                         )}
                                     </Box>
                                     <Box sx={{ mb: '30px' }}>
                                         <LabelWrapper>Автор</LabelWrapper>
                                         <InputWrapper
-                                            name="name"
+                                            name="description"
                                             onChange={handleChange}
                                             type="string"
-                                            value={values.author}
+                                            value={values.description}
                                             onBlur={handleBlur}
                                         />
-                                        {errors.author && touched.author && (
+                                        {errors.description && touched.description && (
                                             <Typography
                                                 sx={{
                                                     textAlign: 'left',
@@ -170,37 +167,7 @@ export const EditBook = () => {
                                                     ml: '14px',
                                                 }}
                                             >
-                                                {errors.author}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                    <Box sx={{ mb: '30px' }}>
-                                        <LabelWrapper>Категории</LabelWrapper>
-                                        <SelectWrapper
-                                            name="category"
-                                            type="string"
-                                            value={values.category}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            sx={{ display: 'block' }}
-                                        >
-                                            <option value="" label="Выберите категорию" />
-                                            <option value="Удобрения" label="Удобрения" />
-                                            <option value="Средства защиты" label="Средства защиты" />
-                                            <option value="Грунт" label="Грунт" />
-                                            <option value="Почва" label="Почва" />
-                                        </SelectWrapper>
-                                        {errors.category && touched.category && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
-                                                {errors.category}
+                                                {errors.description}
                                             </Typography>
                                         )}
                                     </Box>
@@ -224,52 +191,6 @@ export const EditBook = () => {
                                                 }}
                                             >
                                                 {errors.price}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                    <Box sx={{ mb: '30px' }}>
-                                        <LabelWrapper>Год издания</LabelWrapper>
-                                        <InputWrapper
-                                            name="year"
-                                            onChange={handleChange}
-                                            type="text"
-                                            value={values.year}
-                                            onBlur={handleBlur}
-                                        />
-                                        {errors.year && touched.year && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
-                                                {errors.year}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                    <Box sx={{ mb: '30px' }}>
-                                        <LabelWrapper>Количество страниц</LabelWrapper>
-                                        <InputWrapper
-                                            name="quantity"
-                                            onChange={handleChange}
-                                            type="text"
-                                            value={values.quantity}
-                                            onBlur={handleBlur}
-                                        />
-                                        {errors.quantity && touched.quantity && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
-                                                {errors.quantity}
                                             </Typography>
                                         )}
                                     </Box>
