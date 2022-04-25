@@ -1,9 +1,8 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import {fetchAllBooks, fetchBookId} from '../asyncAction';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchFictionBooks, fetchFictionId} from '../asyncAction';
 
-
-const bookSlice = createSlice({
-  name: 'books',
+const fictionSlice = createSlice({
+  name: 'fiction',
   initialState: {
     books: [],
     book: null,
@@ -38,19 +37,19 @@ const bookSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllBooks.fulfilled,
-          (state, action) => {
-        state.books = action.payload;
-
-      })
-    builder
-        .addCase(fetchBookId.fulfilled,
+        .addCase(fetchFictionBooks.fulfilled,
             (state, action) => {
-          state.book = action.payload;
-        })
+              state.books = action.payload;
+
+            })
+    builder
+        .addCase(fetchFictionId.fulfilled,
+            (state, action) => {
+              state.book = action.payload;
+            })
   },
 });
 
-export const { addBook, editBook,  removeBook, clearBook, setCount, setFavorite } = bookSlice.actions;
+export const { addBook, editBook,  removeBook, clearBook, setCount, setFavorite } = fictionSlice.actions;
 
-export default bookSlice.reducer;
+export default fictionSlice.reducer;

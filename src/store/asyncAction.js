@@ -14,12 +14,12 @@ export const fetchAllBooks = createAsyncThunk(
     }
 );
 
-export const fetchFrontBooks = createAsyncThunk(
+export const fetchFictionBooks = createAsyncThunk(
     'books/fetchBooks',
-    async (_, {rejectWithValue, dispatch}) => {
+    async (_, {rejectWithValue}) => {
         try {
             const response = await axios.get(`${baseURL}`);
-            return response.data.books;
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -29,7 +29,6 @@ export const fetchFrontBooks = createAsyncThunk(
 export const fetchBookId = createAsyncThunk(
     'books/fetchBookId',
     async (id, {rejectWithValue}) => {
-        console.log('rt',id)
         try {
             const response = await axios.get(`${BASE_URL}/${id}`);
             return response.data;
@@ -39,3 +38,14 @@ export const fetchBookId = createAsyncThunk(
     }
 );
 
+export const fetchFictionId = createAsyncThunk(
+    'books/fetchFictionId',
+    async (id, {rejectWithValue}) => {
+        try {
+            const response = await axios.get(`${baseURL}/${id}`);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);

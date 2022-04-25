@@ -3,19 +3,21 @@ import {publicRoutes} from "./routes/routes";
 import {Routes, Route} from "react-router";
 import {Navbar} from "./Components/header/header";
 import {useDispatch} from "react-redux";
-import {fetchAllBooks, fetchFrontBooks} from "./store/asyncAction";
+import {fetchAllBooks, fetchFictionBooks} from "./store/asyncAction";
 import {Footer} from "./Components/modules/footer";
-
-
 
  const App = () => {
 const dispatch = useDispatch()
-     const localStore = localStorage.getItem('persist:root').length
+     let localStore
+     if(localStorage.getItem('persist:root') > 0){
+      return localStore = localStorage.getItem('persist:root').length
+     }
+
 
      useEffect(() => {
-         if (localStore <= 185) {
+         if (localStore <= 305) {
              dispatch(fetchAllBooks());
-             dispatch(fetchFrontBooks())
+             dispatch(fetchFictionBooks())
          }
      },[])
 

@@ -53,7 +53,7 @@ export const PhotoWrapper = styled('span')`
 export const CustomButton = styled(Button)`
   height: 52px;
   width: 250px;
-  background-color: blue;
+  background-color: #2152d2;
   padding: 14px 130px;
   border-radius: 20px;
   color: white;

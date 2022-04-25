@@ -14,22 +14,22 @@ import {
     LabelWrapper,
     PhotoWrap, PhotoWrapper,
 } from "../../Components/modules/formInput";
-import {clearBook, editBook} from "../../store/booksSlice/bookSlice";
-import {fetchBookId} from "../../store/asyncAction";
+import {clearBook, editBook} from "../../store/booksSlice/fictionSlice";
+import {fetchFictionId} from "../../store/asyncAction";
 import CircularPreloader from "../../Components/modules/preloader";
 import {validationSchema} from "../../Components/modules/validate";
 
 
-export const EditBook = () => {
+export const EditFiction = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {id} = useParams();
-    const productInfo = useSelector((state) => state.books.book);
+    const productInfo = useSelector((state) => state.fiction.book);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
-        dispatch(fetchBookId(id))
+        dispatch(fetchFictionId(id))
        return () =>
            dispatch(clearBook())
     },[dispatch, id])

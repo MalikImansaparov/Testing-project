@@ -5,9 +5,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {useState} from "react";
 import {BookList} from "../../pages/bookList/bookList";
-import {FrontBooks} from "../../pages/bookList/frontBooks";
 import Grid from "@mui/material/Grid";
-import {CustomButton} from "../../pages/bookList/style";
+import {FictionBooks} from "../../pages/bookList/fictionBooks";
 
 
 export const BookTabs = () => {
@@ -57,14 +56,13 @@ export const BookTabs = () => {
             >
                 <Tab label="Programming" sx={{mr: '30px', ml: '35px'}}/>
                 <Tab label="Fiction" sx={{mr: '30px'}}/>
-                 <CustomButton to='/book/add'>Add book</CustomButton>
             </Tabs>
                 </Box>
             <TabPanel value={value} index={0}>
                 <BookList/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <FrontBooks/>
+                <FictionBooks/>
             </TabPanel>
             </Grid>
         </Grid>

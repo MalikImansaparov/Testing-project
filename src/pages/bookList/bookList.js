@@ -18,11 +18,11 @@ import {removeBook, setCount, setFavorite} from "../../store/booksSlice/bookSlic
 export const BookList = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-  const bookData = useSelector((state) => state.allBooks.books);
-    const countBooks = useSelector((state) => state.allBooks.count);
-    const favoriteBooks = useSelector((state) => state.allBooks.favCount);
+    const bookData = useSelector((state) => state.books.books);
+    const countBooks = useSelector((state) => state.books.count);
+    const favoriteBooks = useSelector((state) => state.books.favCount);
     const [sortBook, setSortBook] = useState(bookData);
-
+    const [favorite, setFavorites] = useState(false)
 
     const sortByTitle = () => {
         setSortBook((data) => {
@@ -32,12 +32,9 @@ export const BookList = () => {
         });
     };
 
-    const favoritesHandler = (id) => {
-        dispatch(setFavorite(id))
-            favoriteBooks.map((item) =>
-                item.id === id ? { ...item, liked: !item.liked } : item
-        );
-    };
+    // const favoritesHandler = (id, book) => {
+    //     dispatch(setFavorite(id, book))
+    // };
 
     const setSortBooks = () => {
         setSortBook(bookData)
@@ -45,9 +42,14 @@ export const BookList = () => {
 
     useEffect(() => {
         dispatch(setCount())
-        dispatch(setFavorite())
         setSortBooks()
-    })
+    },[])
+
+    const favoritesHandler = id => {
+        const data = bookData.map((item) => item.id === id)
+        console.log(data)
+        dispatch(setFavorites(data))
+    };
 
     const handleClick = (id) => {
         navigate(`/book/${id}/`)
@@ -70,7 +72,7 @@ export const BookList = () => {
           </IconButton>
       </BookAction>
       <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
-        {sortBook?.map((book, liked) => {
+        {sortBook.map((book) => {
           return (
                 <Grid item xs={4} key={book.id}>
           <BookItem >
@@ -78,11 +80,11 @@ export const BookList = () => {
                         <BookImg src={book.image} alt='book'/>
                         <BookContent>
                             <PriceBook>{book.price}$</PriceBook>
-                            <span onClick={() => favoritesHandler(book.id)}>
-                                {liked ? <StarIcon sx={{fontSize:'40px'}}/> :
+                            <Box onClick={() => favoritesHandler(book.id)}>
+                                {favorite ? <StarIcon sx={{fontSize:'40px'}}/> :
                                     <StarBorderOutlinedIcon
                                     sx={{fontSize:'40px'}}/>}
-                            </span>
+                            </Box>
                             <ModeEditOutlinedIcon
                                 onClick={() => handleClick(book.id)}
                                 sx={{fontSize:'40px', my:'15px'}}/>
@@ -92,10 +94,9 @@ export const BookList = () => {
                         </BookContent>
                     </Box>
               <BookTitle>{book.title}</BookTitle>
-              <BookTitle sx={{color:'#2152d2'}}>{book.description}</BookTitle>
+              <BookTitle sx={{color:'#2152d2'}}>Author: {book.description.split(',').slice(0, 1)}</BookTitle>
           </BookItem>
                 </Grid>
-
           );
         })}
 

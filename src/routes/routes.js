@@ -1,6 +1,8 @@
 import { EditBook} from "../pages/editBook/editBook";
 import {BookTabs} from "../Components/bookTab/bookTab";
 import {AddBook} from "../pages/addBook/addBook";
+import {AddFiction} from "../pages/addBook/addFiction";
+import {EditFiction} from "../pages/editBook/editFiction";
 
 export const baseURL =
   'https://my-json-server.typicode.com/carlosgustavo/api-react-book-dev-store/products';
@@ -9,10 +11,11 @@ export const BASE_URL =
 
 
 export const publicRoutes = [
+  { path: '/', component: BookTabs },
   { path: 'book/:id', component: EditBook },
   { path: '/book/add', component: AddBook },
-  { path: '/', component: BookTabs },
-
+  { path: 'fiction/:id', component: EditFiction },
+  { path: '/fiction/add', component: AddFiction },
 ];
 
 

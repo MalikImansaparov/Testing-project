@@ -11,15 +11,16 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import bookSlice from './booksSlice/bookSlice';
+import fictionSlice from './booksSlice/fictionSlice';
 
 const rootReducer = combineReducers({
-  allBooks: bookSlice,
+  books: bookSlice,
+  fiction: fictionSlice,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
