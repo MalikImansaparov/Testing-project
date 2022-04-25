@@ -18,7 +18,7 @@ export const BreadCrumb = () => {
             {pathname && (
                 <BreadcrubsWrapper>
                     {pathname === '/' ? 'Main' : null}
-                    {pathname === `/book/${id}` ? 'Main > Edit Book' : null}
+                    {pathname === `/book/${id}/` ? 'Main > Edit Book' : null}
                     {pathname === '/book/add'
                         ? 'Main  >  Add book'
                         : null}

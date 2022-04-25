@@ -41,7 +41,7 @@ color: grey;
 padding-top: 12px;
 `
 export const BookAction = styled(Box)`
-width: 100%;
+
 display: flex;
 position: absolute;
 align-items: center;
@@ -52,7 +52,7 @@ top: 0;
 export const CustomButton = styled(NavLink)`
   height: 36px;
   width: 150px;
-  background-color: blue;
+  background-color: #2152d2;
   border-radius: 20px;
   color: white;
   transition: all 150ms ease;

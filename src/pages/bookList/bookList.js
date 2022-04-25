@@ -13,7 +13,7 @@ import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router";
 import {removeBook, setCount, setFavorite} from "../../store/booksSlice/bookSlice";
-import {fetchBookId} from "../../store/asyncAction";
+
 
 export const BookList = () => {
     const navigate = useNavigate()
@@ -47,11 +47,10 @@ export const BookList = () => {
         dispatch(setCount())
         dispatch(setFavorite())
         setSortBooks()
-    },[])
-  // const bookData = Array.from(bookSelector)
+    })
+
     const handleClick = (id) => {
-        // dispatch(fetchBookId(id))
-        navigate(`book/${id}`)
+        navigate(`/book/${id}/`)
     }
 
   return (
@@ -71,7 +70,7 @@ export const BookList = () => {
           </IconButton>
       </BookAction>
       <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
-        {sortBook.map((book, liked) => {
+        {sortBook?.map((book, liked) => {
           return (
                 <Grid item xs={4} key={book.id}>
           <BookItem >
@@ -93,11 +92,13 @@ export const BookList = () => {
                         </BookContent>
                     </Box>
               <BookTitle>{book.title}</BookTitle>
-              <BookTitle sx={{color:'blue'}}>{book.description}</BookTitle>
+              <BookTitle sx={{color:'#2152d2'}}>{book.description}</BookTitle>
           </BookItem>
                 </Grid>
+
           );
         })}
+
       </GridWrap>
      </>
   );

@@ -16,18 +16,11 @@ const bookSlice = createSlice({
       state.books.push(action.payload);
     },
     removeBook(state, action) {
-      state.books = state.books.filter((todo) => todo.id !== action.payload);
+      state.books = state.books.filter((item) => item.id !== action.payload);
     },
     editBook(state, action) {
-      books: state.books.map((post) =>
-          post.id === action.payload.id
-              ? post.comments.map((comment) =>
-                  comment.id === action.payload.id
-                      ? action.payload
-                      : comment
-              )
-              : post
-      )
+      state.books = state.books.map((item) =>
+          item.id === action.payload.id ? action.payload : item)
     },
     setCount(state){
       state.count = state.books.length
@@ -39,7 +32,8 @@ const bookSlice = createSlice({
       state.favCount = state.favorite.length
     },
     setFavorite(state, action){
-      state.favorite = state.books.map((item) => item.id === action.payload)
+      state.favorite = state.books.map((item) =>
+          item.id === action.payload ? {...item, likes: action.payload}  : item)
     },
   },
   extraReducers: (builder) => {
@@ -47,6 +41,7 @@ const bookSlice = createSlice({
       .addCase(fetchAllBooks.fulfilled,
           (state, action) => {
         state.books = action.payload;
+
       })
     builder
         .addCase(fetchBookId.fulfilled,

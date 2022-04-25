@@ -1,4 +1,3 @@
-import {HomePage} from "../pages/homePage/homePage";
 import { EditBook} from "../pages/editBook/editBook";
 import {BookTabs} from "../Components/bookTab/bookTab";
 import {AddBook} from "../pages/addBook/addBook";
@@ -10,7 +9,7 @@ export const BASE_URL =
 
 
 export const publicRoutes = [
-  { path: '/book/:id', component: EditBook },
+  { path: 'book/:id', component: EditBook },
   { path: '/book/add', component: AddBook },
   { path: '/', component: BookTabs },
 

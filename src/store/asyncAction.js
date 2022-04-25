@@ -29,7 +29,7 @@ export const fetchFrontBooks = createAsyncThunk(
 export const fetchBookId = createAsyncThunk(
     'books/fetchBookId',
     async (id, {rejectWithValue}) => {
-        console.log(id)
+        console.log('rt',id)
         try {
             const response = await axios.get(`${BASE_URL}/${id}`);
             return response.data;

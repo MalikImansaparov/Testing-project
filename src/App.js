@@ -4,6 +4,8 @@ import {Routes, Route} from "react-router";
 import {Navbar} from "./Components/header/header";
 import {useDispatch} from "react-redux";
 import {fetchAllBooks, fetchFrontBooks} from "./store/asyncAction";
+import {Footer} from "./Components/modules/footer";
+
 
 
  const App = () => {
@@ -11,7 +13,7 @@ const dispatch = useDispatch()
      const localStore = localStorage.getItem('persist:root').length
 
      useEffect(() => {
-         if (localStore <= 175) {
+         if (localStore <= 185) {
              dispatch(fetchAllBooks());
              dispatch(fetchFrontBooks())
          }
@@ -29,6 +31,7 @@ const dispatch = useDispatch()
             />
         ))}
         </Routes>
+        <Footer/>
     </>
   );
 }

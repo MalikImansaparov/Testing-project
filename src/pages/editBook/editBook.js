@@ -1,62 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
-import { useNavigate, useParams } from "react-router";
+import {useNavigate, useParams} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
-import * as Yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import {GoBack} from "../../Components/modules/goBack";
 import {Item} from "../../theme";
 import {
+    CustomButton,
     InputWrap,
     InputWrapper,
     LabelWrapper,
-    PhotoWrap,
-    SelectWrapper
+    PhotoWrap, PhotoWrapper,
 } from "../../Components/modules/formInput";
-import {CustomButton, PhotoWrapper} from "./style";
-import {addBook, clearBook} from "../../store/booksSlice/bookSlice";
+import {clearBook, editBook} from "../../store/booksSlice/bookSlice";
 import {fetchBookId} from "../../store/asyncAction";
+import CircularPreloader from "../../Components/modules/preloader";
+import {validationSchema} from "../../Components/modules/validate";
 
-
-const validationSchema = Yup.object({
-    name: Yup.string().required('Наименование обязательный'),
-    picture: Yup.string().required('Загрузите картину'),
-    authors: Yup.string().required('Автор обязательный'),
-    quantity: Yup.string().required('Укажите количество страниц'),
-    price: Yup.number().required('Укажите цену'),
-    year: Yup.number().required('Укажите год выпуска'),
-});
 
 export const EditBook = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {id} = useParams();
     const productInfo = useSelector((state) => state.allBooks.book);
-    console.log(productInfo)
-    const id = useParams();
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
         dispatch(fetchBookId(id))
-        return () => {
-            dispatch(clearBook())
-        }
-    },[dispatch])
+       return () =>
+           dispatch(clearBook())
+    },[dispatch, id])
 
     const handleSubmit = (values,{ setSubmitting }) => {
-        dispatch((values))
+        dispatch(editBook(values))
         setSubmitting(false);
         navigate(-1)
     }
 
     const initialValues = {
+        id: productInfo?.id,
         title: productInfo?.title,
         image: productInfo?.image,
         description: productInfo?.description,
         price: productInfo?.price,
     };
+
+    if (!productInfo) {
+        return (
+            <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
+                <Item
+                    sx={{
+                        width: '1060px',
+                        height: '700px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <CircularPreloader />
+                </Item>
+            </Box>
+        );
+    }
+
 
     return (
         <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
@@ -95,7 +104,9 @@ export const EditBook = () => {
                                                     multiple
                                                     type="file"
                                                     onChange={(event) => {
-                                                        setFieldValue('image', event.currentTarget.files[0])
+                                                        setFieldValue('image',
+                                                            URL.createObjectURL(event.target.files[0])
+                                                        )
                                                         setSelectedImage(event.target.files[0])
                                                     }}
                                                 />
@@ -107,7 +118,8 @@ export const EditBook = () => {
                                                         src={values.image}
                                                         alt=""
                                                     />
-                                                )}
+                                                    )}
+
                                                 <Typography>Изменить фото</Typography>
                                             </PhotoWrapper>
                                         </label>
@@ -214,5 +226,4 @@ export const EditBook = () => {
         </Box>
     );
 };
-
 

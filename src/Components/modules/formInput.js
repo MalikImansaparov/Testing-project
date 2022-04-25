@@ -1,6 +1,7 @@
 import {styled} from "@mui/system";
 import {Typography} from "@mui/material";
 import { Box } from '@mui/material';
+import Button from "@mui/material/Button";
 
 export const InputWrapper = styled('input')`
   width: 500px;
@@ -15,36 +16,6 @@ export const InputWrapper = styled('input')`
 
 `;
 
-export const ScheduleWrapper = styled('input')`
-  width: 80px;
-  height: 40px;
-  border-radius: 20px;
-  border: 1px solid #000000;
-  outline: none;
-  margin: 20px;
-  padding: 15px 18.5px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #000000;
-`;
-
-export const SelectWrapper = styled('select')`
-  width: 500px;
-  height: 52px;
-  border-radius: 20px;
-  border: 1px solid #000000;
-  outline: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  color: #969696;
-  background: transparent
-    url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png')
-    no-repeat 95% center;
-`;
 
 export const LabelWrapper = styled(Typography)`
   margin: 0 0 6px 12px;
@@ -54,18 +25,18 @@ export const LabelWrapper = styled(Typography)`
 `;
 
 export const PhotoWrap = styled(Box)`
-  width: 200px;
-  height: 160px;
+  width: 210px;
+  height: 230px;
 `;
 
 export const DefaultPhoto = styled(Box)`
-  width: 180px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
 `;
 
 export const PhotoWrapper = styled('span')`
-  width: 230px;
-  height: 210px;
+  width: 250px;
+  height: 280px;
   display: block;
   justify-content: center;
   border-radius: 20px;
@@ -79,17 +50,24 @@ export const PhotoWrapper = styled('span')`
   }
 `;
 
-export const TextareaWrapper = styled('textarea')`
-  font-family: 'Montserrat';
-  width: 500px;
-  height: 180px;
+export const CustomButton = styled(Button)`
+  height: 52px;
+  width: 250px;
+  background-color: blue;
+  padding: 14px 130px;
   border-radius: 20px;
-  border: 1px solid #000000;
-  outline: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #000000;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 70px;
+  &:hover {
+    background-color: red;
+  }
 `;
 
 export const InputWrap = styled('input')`

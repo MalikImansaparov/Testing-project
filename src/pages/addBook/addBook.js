@@ -4,7 +4,6 @@ import { useNavigate} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
-import * as Yup from "yup";
 import { useDispatch} from 'react-redux';
 import {GoBack} from "../../Components/modules/goBack";
 import {Item} from "../../theme";
@@ -19,14 +18,7 @@ import {
 import {CustomButton} from "./style";
 import Upload from '../../assets/images/upload.svg'
 import {addBook} from "../../store/booksSlice/bookSlice";
-
-const validationSchema = Yup.object({
-    title: Yup.string().required('Наименование обязательный'),
-    image: Yup.string().required('Загрузите картину'),
-    description: Yup.string().required('Автор обязательный'),
-    price: Yup.number().required('Укажите цену'),
-
-});
+import {validationSchema} from "../../Components/modules/validate";
 
 export const AddBook = () => {
     const navigate = useNavigate();
@@ -91,7 +83,8 @@ export const AddBook = () => {
                                                     multiple
                                                     type="file"
                                                     onChange={(event) => {
-                                                        setFieldValue('image', URL.createObjectURL(event.target.files[0])
+                                                        setFieldValue('image',
+                                                            URL.createObjectURL(event.target.files[0])
                                                         )
                                                         setSelectedImage(event.target.files[0])
                                                     }}
