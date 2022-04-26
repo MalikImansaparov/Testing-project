@@ -22,6 +22,8 @@ export const BreadCrumb = () => {
                     {pathname === '/book/add'
                         ? 'Main  >  Add book'
                         : null}
+                    {pathname === '/fiction' ? 'Favorite' : null}
+                    {pathname === `/favorite` ? 'Favorite' : null}
                 </BreadcrubsWrapper>
             )}
         </div>

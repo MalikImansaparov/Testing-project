@@ -5,21 +5,40 @@ import {Navbar} from "./Components/header/header";
 import {useDispatch} from "react-redux";
 import {fetchAllBooks, fetchFictionBooks} from "./store/asyncAction";
 import {Footer} from "./Components/modules/footer";
+import {clearBooks} from "./store/booksSlice/bookSlice";
 
  const App = () => {
 const dispatch = useDispatch()
-     let localStore
-     if(localStorage.getItem('persist:root') > 0){
-      return localStore = localStorage.getItem('persist:root').length
-     }
-
+     // let localStore
+     //
+     // useEffect(() => {
+     //     if (localStorage.getItem('persist:root') === null ) {
+     //         dispatch(fetchAllBooks());
+     //         dispatch(fetchFictionBooks())
+     //     }
+     // },[])
 
      useEffect(() => {
-         if (localStore <= 305) {
              dispatch(fetchAllBooks());
-             dispatch(fetchFictionBooks())
-         }
+         dispatch(fetchFictionBooks());
      },[])
+
+
+     // setTimeout(function(){
+     //      localStore = localStorage.getItem('persist:root').length
+     // }, 5000)
+     //
+     // const updateDate = () => {
+     //     if (localStore <= 300 ) {
+     //         dispatch(fetchAllBooks());
+     //         dispatch(fetchFictionBooks())
+     //     }
+     // }
+     //
+     // setTimeout(updateDate, 10000)
+
+
+
 
   return (
     <>
@@ -33,7 +52,6 @@ const dispatch = useDispatch()
             />
         ))}
         </Routes>
-        <Footer/>
     </>
   );
 }

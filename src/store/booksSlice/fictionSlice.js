@@ -6,7 +6,6 @@ const fictionSlice = createSlice({
   initialState: {
     books: [],
     book: null,
-    counts: null,
     favCount: null,
     favorite: []
   },
@@ -21,18 +20,20 @@ const fictionSlice = createSlice({
       state.books = state.books.map((item) =>
           item.id === action.payload.id ? action.payload : item)
     },
-    setCount(state){
-      state.counts = state.books.length
-    },
     clearBook(state) {
       state.book = null;
     },
-    favoriteCount(state){
-      state.favCount = state.favorite.length
+    removeFavorites(state, action) {
+      state.books = state.books.filter((item) => item.id !== action.payload);
     },
     setFavorite(state, action){
       state.favorite.push(action.payload)
-
+    },
+    setItemInFavorite: (state, action) => {
+      state.favorite.push(action.payload)
+    },
+    deleteItemFromFavorite: (state, action) => {
+      state.favorite = state.favorite.filter(item => item.id !== action.payload)
     },
   },
   extraReducers: (builder) => {
@@ -50,6 +51,7 @@ const fictionSlice = createSlice({
   },
 });
 
-export const { addBook, editBook,  removeBook, clearBook, setCount, setFavorite } = fictionSlice.actions;
+export const { addBook, editBook,  removeBook, clearBook,
+  setItemInFavorite, removeFavorites} = fictionSlice.actions;
 
 export default fictionSlice.reducer;

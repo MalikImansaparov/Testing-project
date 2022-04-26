@@ -12,20 +12,15 @@ import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router";
-import {removeBook, setItemInFavorite} from "../../store/booksSlice/fictionSlice";
-import Checkbox from "@mui/material/Checkbox";
-import {NavLink} from "react-router-dom";
+import {removeFavorites} from "../../store/booksSlice/fictionSlice";
 
-export const FictionBooks = () => {
+export const FavoriteBooks = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const bookData = useSelector((state) => state.fiction.books);
+    const bookData = useSelector((state) => state.fiction.favorite);
     const [sortBook, setSortBook] = useState(bookData);
     const items = useSelector((state) => state.fiction.favorite);
 
-    const favoriteHandler = (book) => {
-        dispatch(setItemInFavorite(book));
-    };
 
     const sortByTitle = () => {
         setSortBook((data) => {
@@ -57,13 +52,11 @@ export const FictionBooks = () => {
                         <LibraryBooksIcon sx={{color: 'white'}}/>
                     </Badge>
                 </IconButton>
-                <NavLink to='/fiction'>
                 <IconButton size="large" >
                     <Badge badgeContent={items.length} color="error" sx={{mt: '13px'}}>
                         <StarIcon sx={{fontSize: '27px', color: 'white'}} />
                     </Badge>
                 </IconButton>
-                </NavLink>
             </BookAction>
             <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
                 {sortBook?.map((book) => {
@@ -74,17 +67,11 @@ export const FictionBooks = () => {
                                     <BookImg src={book.image} alt='book'/>
                                     <BookContent>
                                         <PriceBook>{book.price}$</PriceBook>
-                                        <Box>
-                                        <Checkbox onClick={() => favoriteHandler(book)}
-                                                  icon={<StarBorderOutlinedIcon sx={{fontSize:'40px'}}/>}
-                                                  checkedIcon={<StarIcon sx={{fontSize:'40px'}}
-                                                  />}  />
-                                        </Box>
                                         <ModeEditOutlinedIcon
                                             onClick={() => handleClick(book.id)}
                                             sx={{fontSize:'40px', my:'15px'}}/>
                                         <DeleteOutlinedIcon
-                                            onClick={() => dispatch(removeBook(book.id))}
+                                            onClick={() => dispatch(removeFavorites(book.id))}
                                             sx={{fontSize:'40px'}} />
                                     </BookContent>
                                 </Box>

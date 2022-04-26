@@ -1,15 +1,14 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {fetchAllBooks, fetchBookId} from '../asyncAction';
-
 
 const bookSlice = createSlice({
   name: 'books',
   initialState: {
     books: [],
     book: null,
-    counts: null,
     favCount: null,
-    favorite: []
+    favorite: [],
+    currentFavorite: []
   },
   reducers: {
     addBook(state, action) {
@@ -22,18 +21,20 @@ const bookSlice = createSlice({
       state.books = state.books.map((item) =>
           item.id === action.payload.id ? action.payload : item)
     },
-    setCount(state){
-      state.counts = state.books.length
-    },
     clearBook(state) {
       state.book = null;
     },
-    favoriteCount(state){
-      state.favCount = state.favorite.length
+    clearBooks(state) {
+      state.books = null;
     },
-    setFavorite(state, action){
+    removeFavorite(state, action) {
+      state.favorite = state.favorite.filter((item) => item.id !== action.payload);
+    },
+    setItemInFavorite: (state, action) => {
       state.favorite.push(action.payload)
-
+    },
+    deleteItemFromFavorite: (state, action) => {
+      state.favorite = state.favorite.filter(item => item.id !== action.payload)
     },
   },
   extraReducers: (builder) => {
@@ -51,6 +52,7 @@ const bookSlice = createSlice({
   },
 });
 
-export const { addBook, editBook,  removeBook, clearBook, setCount, setFavorite } = bookSlice.actions;
+export const { addBook, editBook,  removeBook, clearBooks,  clearBook,
+  setItemInFavorite, removeFavorite } = bookSlice.actions;
 
 export default bookSlice.reducer;
