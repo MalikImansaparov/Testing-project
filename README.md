@@ -12,7 +12,6 @@ Demo: https://codifylib.netlify.app/
 - Axois
 - Material UI 
 - Formik, Yup
-- Pretier
 
 ### Configuration
 - CRA 

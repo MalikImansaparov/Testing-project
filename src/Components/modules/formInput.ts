@@ -1,7 +1,8 @@
 import {styled} from "@mui/system";
-import {Typography} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 import { Box } from '@mui/material';
 import Button from "@mui/material/Button";
+import Item from '../../theme'
 
 export const InputWrapper = styled('input')`
   width: 500px;
@@ -15,7 +16,6 @@ export const InputWrapper = styled('input')`
   color: #000000;
 
 `;
-
 
 export const LabelWrapper = styled(Typography)`
   margin: 0 0 6px 12px;
@@ -72,6 +72,13 @@ export const CustomButton = styled(Button)`
 
 export const InputWrap = styled('input')`
 display: none
+`
+export const PreloaderWrap = styled(Paper)`                       
+  width: '1060px',
+  height: '700px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',                    
 `
 
 

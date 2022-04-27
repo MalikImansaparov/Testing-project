@@ -16,12 +16,14 @@ export const GridWrap = styled(Grid)`
  justify-content: center;
  align-items: center;
  margin: 0 auto;
+ padding-bottom: 50px;
 `
 export const BookImg = styled('img')`
  height: 280px;
- width: 240px;
+ width: 230px;
  padding: 0;
  margin-left: 30px;
+ cursor: pointer;
 `
 export const PriceBook = styled(Typography)`
 font-size: 20px; 

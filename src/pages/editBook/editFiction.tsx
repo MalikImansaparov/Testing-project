@@ -1,78 +1,69 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import {FC, useEffect, useState } from "react";
 import { Formik } from "formik";
 import {useNavigate, useParams} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
-import { useDispatch, useSelector } from 'react-redux';
-import {GoBack} from "../../Components/modules/goBack";
-import {Item} from "../../theme";
+import { GoBack } from '../../components/modules/goBack';
+import { Item } from '../../theme';
 import {
-    CustomButton,
-    InputWrap,
-    InputWrapper,
-    LabelWrapper,
-    PhotoWrap, PhotoWrapper,
-} from "../../Components/modules/formInput";
-import {clearBook, editBook} from "../../store/booksSlice/bookSlice";
+  CustomButton,
+  InputWrap,
+  InputWrapper,
+  LabelWrapper,
+  PhotoWrap,
+  PhotoWrapper,
+} from '../../components/modules/formInput';
+import CircularPreloader from '../../components/modules/preloader';
+import { validationSchema } from '../../components/modules/validate';
+import {useTypedSelector} from "../../components/hooks/useTypedselector";
+import {useAction} from "../../components/hooks/useAction";
 import {fetchBookId} from "../../store/asyncAction";
-import CircularPreloader from "../../Components/modules/preloader";
-import {validationSchema} from "../../Components/modules/validate";
+
+type editTypes = {
+    id: number
+    title: string;
+    description: string;
+    prices: number;
+    image: number;
+}
 
 
-export const EditBook = () => {
+export const EditFiction:FC<editTypes> = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const {id} = useParams();
-    const productInfo = useSelector((state) => state.books.book);
+    const productInfo = useTypedSelector((state) => state.fiction.book);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
+    const { editBook, clearBook} = useAction()
 
     useEffect(() => {
-        dispatch(fetchBookId(id))
-       return () =>
-           dispatch(clearBook())
-    },[dispatch, id])
+        fetchBookId(id);
+        return () => clearBook();
+    }, [id]);
 
-    const handleSubmit = (values,{ setSubmitting }) => {
-        dispatch(editBook(values))
+    const handleSubmit = (values, { setSubmitting }) => {
+        editBook(values);
         setSubmitting(false);
-        navigate(-1)
-    }
-
-    const initialValues = {
-        id: productInfo?.id,
-        title: productInfo?.title,
-        image: productInfo?.image,
-        description: productInfo?.description,
-        price: productInfo?.price,
+        navigate(-1);
     };
 
     if (!productInfo) {
         return (
-            <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
-                <Item
-                    sx={{
-                        width: '1060px',
-                        height: '700px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
+            <Box my={5} sx={{display: 'flex',
+                justifyContent: 'center'}} >
                     <CircularPreloader />
-                </Item>
             </Box>
         );
     }
-
 
     return (
         <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
             <Item sx={{ width: '1060px' }}>
                 <FormControl>
                     <Formik
-                        initialValues={initialValues}
+                        initialValues={productInfo}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
                     >
@@ -119,7 +110,6 @@ export const EditBook = () => {
                                                         alt=""
                                                     />
                                                     )}
-
                                                 <Typography>Изменить фото</Typography>
                                             </PhotoWrapper>
                                         </label>

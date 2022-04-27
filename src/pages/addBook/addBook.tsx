@@ -1,34 +1,35 @@
-import React, {useEffect, useState} from "react";
+import * as React from "react";
+import {FC, useEffect, useState} from "react";
 import { Formik } from "formik";
 import { useNavigate} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import { useDispatch} from 'react-redux';
-import {GoBack} from "../../Components/modules/goBack";
+import { GoBack } from '../../components/modules/goBack';
 import {Item} from "../../theme";
 import {
-    DefaultPhoto,
-    InputWrap,
-    InputWrapper,
-    LabelWrapper,
-    PhotoWrap,
-    PhotoWrapper
-} from "../../Components/modules/formInput";
+  DefaultPhoto,
+  InputWrap,
+  InputWrapper,
+  LabelWrapper,
+  PhotoWrap,
+  PhotoWrapper,
+} from '../../components/modules/formInput';
 import {CustomButton} from "./style";
 import Upload from '../../assets/images/upload.svg'
-import {addBook} from "../../store/booksSlice/bookSlice";
-import {validationSchema} from "../../Components/modules/validate";
+import { validationSchema } from '../../components/modules/validate';
+import {InputForm} from "../../components/bookTypes";
+import {useAction} from "../../components/hooks/useAction";
 
-export const AddBook = () => {
+export const AddBook:FC<InputForm> = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const addBook = useAction()
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
     const handleSubmit = (values,{ setSubmitting }) => {
-            console.log(values)
-            dispatch(addBook(values))
+            addBook(values)
             setSubmitting(false);
             navigate(-1)
         }

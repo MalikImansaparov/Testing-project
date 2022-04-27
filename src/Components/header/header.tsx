@@ -4,14 +4,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import StarIcon from '@mui/icons-material/Star';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {BreadCrumb} from "../modules/breadCrumbs";
-import {NavWrap} from "./style";
 import {useNavigate} from "react-router";
-
 
 export const Navbar = () => {
     const navigate = useNavigate()
@@ -38,21 +34,7 @@ export const Navbar = () => {
                         CodifyLib
                     </Typography>
                     <BreadCrumb/>
-
-                    {/*<Search>*/}
-                    {/*    <SearchIconWrapper>*/}
-                    {/*        <SearchIcon />*/}
-                    {/*    </SearchIconWrapper>*/}
-                    {/*    <StyledInputBase*/}
-                    {/*        placeholder="Search…"*/}
-                    {/*        inputProps={{ 'aria-label': 'search' }}*/}
-                    {/*    />*/}
-                    {/*</Search>*/}
                     <Box sx={{ flexGrow: 1 }} />
-
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
-                    </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"

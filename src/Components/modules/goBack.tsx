@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {useNavigate} from "react-router";
 import Button from "@mui/material/Button";
 import styled from "@emotion/styled";

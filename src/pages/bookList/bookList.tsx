@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import * as React from "react";
+import {FC,useState} from 'react';
 import Grid from '@mui/material/Grid';
 import {BookAction, BookContent, BookImg, BookItem, BookTitle, GridWrap, PriceBook} from './style';
-import { useSelector, useDispatch } from 'react-redux';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -12,21 +12,19 @@ import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router";
-import {
-    removeBook, removeFavorite,
-    setItemInFavorite
-} from "../../store/booksSlice/bookSlice";
-import CircularPreloader from "../../Components/modules/preloader";
-import {Item} from "../../theme";
 import Checkbox from "@mui/material/Checkbox";
+import {NavLink} from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
+import {InputForm} from "../../components/bookTypes";
+import {useTypedSelector} from "../../components/hooks/useTypedselector";
+import {useAction} from "../../components/hooks/useAction";
 
-
-export const FavoriteList = () => {
+export const BookList:FC<InputForm> = ():any => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const bookData = useSelector((state) => state.books.favorite);
+    const bookData = useTypedSelector((state) => state.books.books);
+    const items = useTypedSelector((state) => state.books.favorite);
     const [sortBook, setSortBook] = useState(bookData);
-    const items = useSelector((state) => state.books.favorite);
+    const {setItemInFavorite, removeBook}= useAction()
 
     const sortByTitle = () => {
         setSortBook((data) => {
@@ -36,76 +34,65 @@ export const FavoriteList = () => {
         });
     };
 
-    const setSortBooks = () => {
+    setTimeout(() => {
         setSortBook(bookData)
-    }
-
-    useEffect(() => {
-        setSortBooks()
-    },[removeBook])
-
-    const handleNavigate = (id) => {
-        navigate(`/book/${id}/`)
-    }
-
-    if (!bookData) {
-        return (
-            <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
-                <Item
-                    sx={{
-                        width: '1060px',
-                        height: '700px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <CircularPreloader />
-                </Item>
-            </Box>
-        );
-    }
+    }, 3000)
 
   return (
       <>
       <BookAction>
+          <Tooltip title="Sort Alphabet">
           <AbcIcon onClick={() => sortByTitle()}
               sx={{fontSize: '50px', color: 'white', mt:'8px'}}/>
+          </Tooltip>
+          <Tooltip title="Count Books">
           <IconButton size="large">
               <Badge badgeContent={bookData.length} color="error" sx={{mt:'10px'}}>
                   <LibraryBooksIcon sx={{color: 'white'}}/>
               </Badge>
           </IconButton>
+          </Tooltip>
+          <NavLink to='/favorite'>
+              <Tooltip title="Favorites Books">
           <IconButton size="large" >
               <Badge badgeContent={items.length} color="error" sx={{mt: '13px'}}>
                   <StarIcon sx={{fontSize: '27px', color: 'white'}} />
               </Badge>
           </IconButton>
+              </Tooltip>
+      </NavLink>
       </BookAction>
       <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
-        {sortBook.map((book) => {
+        {sortBook && sortBook.map((book) => {
           return (
                 <Grid item xs={4} key={book.id}>
           <BookItem >
                     <Box sx={{display: 'flex'}}>
+                        <NavLink to={`/book/${book.id}`}>
                         <BookImg src={book.image} alt='book'/>
+                       </NavLink>
                         <BookContent>
                             <PriceBook>{book.price}$</PriceBook>
+                                   <Checkbox onClick={() => setItemInFavorite(book)}
+                                             icon={<StarBorderOutlinedIcon sx={{fontSize:'40px'}}/>}
+                                             checkedIcon={<StarIcon sx={{fontSize:'40px'}}
+                                       />}  />
                             <ModeEditOutlinedIcon
-                                onClick={() => handleNavigate(book.id)}
+                                onClick={() => navigate(`/book/${book.id}/`)}
                                 sx={{fontSize:'40px', my:'15px'}}/>
                             <DeleteOutlinedIcon
-                                onClick={() => dispatch(removeFavorite(book.id))}
+                                onClick={() => removeBook(book.id)}
                                 sx={{fontSize:'40px'}} />
                         </BookContent>
                     </Box>
               <BookTitle>{book.title}</BookTitle>
-              <BookTitle sx={{color:'#2152d2'}}>Author: {book.description.split(',').slice(0, 1)}</BookTitle>
+              <BookTitle sx={{color:'#2152d2'}}>
+                  Author: {book.description.split(',').slice(0, 1)}
+              </BookTitle>
           </BookItem>
                 </Grid>
           );
         })}
-
       </GridWrap>
      </>
   );

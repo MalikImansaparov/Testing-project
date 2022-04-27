@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import styled from "@emotion/styled";
 import {useLocation, useParams} from "react-router-dom";
 
@@ -11,19 +11,19 @@ export const BreadcrubsWrapper = styled('div')`
 
 export const BreadCrumb = () => {
     const location = useLocation();
-    const {id} = useParams()
+    const id = useParams()
     const {pathname} = location
     return (
         <div>
             {pathname && (
                 <BreadcrubsWrapper>
                     {pathname === '/' ? 'Main' : null}
-                    {pathname === `/book/${id}/` ? 'Main > Edit Book' : null}
+                    {pathname === `/book/${id}` ? 'Main > Edit Book' : null}
                     {pathname === '/book/add'
                         ? 'Main  >  Add book'
                         : null}
                     {pathname === '/fiction' ? 'Favorite' : null}
-                    {pathname === `/favorite` ? 'Favorite' : null}
+                    {pathname === '/favorite' ? 'Favorite' : null}
                 </BreadcrubsWrapper>
             )}
         </div>

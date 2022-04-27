@@ -1,71 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import {FC, useEffect, useState} from "react";
 import { Formik } from "formik";
-import {useNavigate, useParams} from "react-router";
+import { useNavigate} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
-import { useDispatch, useSelector } from 'react-redux';
-import {GoBack} from "../../Components/modules/goBack";
+import { useDispatch} from 'react-redux';
+import { GoBack } from '../../components/modules/goBack';
 import {Item} from "../../theme";
 import {
-    CustomButton,
-    InputWrap,
-    InputWrapper,
-    LabelWrapper,
-    PhotoWrap, PhotoWrapper,
-} from "../../Components/modules/formInput";
-import {clearBook, editBook} from "../../store/booksSlice/fictionSlice";
-import {fetchFictionId} from "../../store/asyncAction";
-import CircularPreloader from "../../Components/modules/preloader";
-import {validationSchema} from "../../Components/modules/validate";
+  DefaultPhoto,
+  InputWrap,
+  InputWrapper,
+  LabelWrapper,
+  PhotoWrap,
+  PhotoWrapper,
+} from '../../components/modules/formInput';
+import {CustomButton} from "./style";
+import Upload from '../../assets/images/upload.svg'
+import { validationSchema } from '../../components/modules/validate';
+import {InputForm} from "../../components/bookTypes";
+import {useAction} from "../../components/hooks/useAction";
 
-
-export const EditFiction = () => {
+export const AddFiction:FC<InputForm> = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const {id} = useParams();
-    const productInfo = useSelector((state) => state.fiction.book);
+    const addBook = useAction();
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
-    useEffect(() => {
-        dispatch(fetchFictionId(id))
-       return () =>
-           dispatch(clearBook())
-    },[dispatch, id])
-
     const handleSubmit = (values,{ setSubmitting }) => {
-        dispatch(editBook(values))
-        setSubmitting(false);
-        navigate(-1)
-    }
+            addBook(values)
+            setSubmitting(false);
+            navigate(-1)
+        }
+
+    useEffect(() => {
+        if (selectedImage) {
+            setImageUrl(URL.createObjectURL(selectedImage));
+        }
+    }, [selectedImage]);
 
     const initialValues = {
-        id: productInfo?.id,
-        title: productInfo?.title,
-        image: productInfo?.image,
-        description: productInfo?.description,
-        price: productInfo?.price,
+        title: '',
+        image: '',
+        description: '',
+        price: '',
     };
-
-    if (!productInfo) {
-        return (
-            <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
-                <Item
-                    sx={{
-                        width: '1060px',
-                        height: '700px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <CircularPreloader />
-                </Item>
-            </Box>
-        );
-    }
-
 
     return (
         <Box sx={{display: 'flex',justifyContent: 'center'}} my={5}>
@@ -110,17 +90,16 @@ export const EditFiction = () => {
                                                         setSelectedImage(event.target.files[0])
                                                     }}
                                                 />
-                                                {imageUrl && selectedImage ? (
-                                                    <PhotoWrap component="img" src={imageUrl} alt="" />
-                                                ) : (
-                                                    <PhotoWrap
-                                                        component="img"
-                                                        src={values.image}
-                                                        alt=""
-                                                    />
-                                                    )}
-
-                                                <Typography>Изменить фото</Typography>
+                                                { imageUrl && selectedImage ?
+                                                    <Box>
+                                                        <PhotoWrap component="img" src={imageUrl} alt='' />
+                                                        <Typography>Изменить фото</Typography>
+                                                    </Box>:
+                                                    <Box>
+                                                        <DefaultPhoto component="img" src={Upload} alt="" />
+                                                        <Typography>Добавить фото</Typography>
+                                                    </Box>
+                                                }
                                             </PhotoWrapper>
                                         </label>
                                         {errors.image && touched.image && (
@@ -226,4 +205,5 @@ export const EditFiction = () => {
         </Box>
     );
 };
+
 
