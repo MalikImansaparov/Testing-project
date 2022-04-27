@@ -54,28 +54,30 @@ export const FavoriteBooks:FC<InputForm> = () => {
             <GridWrap sx={{ flexGrow: 1 }} container spacing={3} >
                 {sortBook?.map((book) => {
                     return (
-                        <Grid item xs={4} key={book.id}>
-                            <BookItem >
-                                <Box sx={{display: 'flex'}}>
-                                    <BookImg src={book.image} alt='book'/>
-                                    <BookContent>
-                                        <PriceBook>{book.price}$</PriceBook>
-                                        <ModeEditOutlinedIcon
-                                            onClick={() => navigate(`/fiction/${book.id}/`)}
-                                            sx={{fontSize:'40px', my:'15px'}}/>
-                                        <DeleteOutlinedIcon
-                                            onClick={() => removeFavorite(book.id)}
-                                            sx={{fontSize:'40px'}} />
-                                    </BookContent>
-                                </Box>
-                                <BookTitle>
-                                    {book.title.split('-').slice(0, 1)}
-                                </BookTitle>
-                                <BookTitle sx={{color:'#2152d2'}}>
-                                    {book.description.split('|').slice(0, 1)}
-                                </BookTitle>
-                            </BookItem>
-                        </Grid>
+                      <Grid item xs={4} key={book.id}>
+                        <BookItem>
+                          <Box sx={{ display: 'flex' }}>
+                            <BookImg src={book.image} alt="book" />
+                            <BookContent>
+                              <PriceBook>{book.price}$</PriceBook>
+                              <ModeEditOutlinedIcon
+                                onClick={() => navigate(`/fiction/${book.id}/`)}
+                                sx={{ fontSize: '40px', my: '15px' }}
+                              />
+                              <DeleteOutlinedIcon
+                                onClick={() => removeFavorite(book.id)}
+                                sx={{ fontSize: '40px' }}
+                              />
+                            </BookContent>
+                          </Box>
+                          <BookTitle>
+                            {book.title.split('-').slice(0, 1)}
+                          </BookTitle>
+                          <BookTitle sx={{ color: '#2152d2' }}>
+                            {book.description.split('|').slice(0, 1)}
+                          </BookTitle>
+                        </BookItem>
+                      </Grid>
                     );
                 })}
             </GridWrap>

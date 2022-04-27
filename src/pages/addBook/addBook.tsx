@@ -4,8 +4,7 @@ import { Formik } from "formik";
 import { useNavigate} from "react-router";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import Typography from "@mui/material/Typography";
-import { useDispatch} from 'react-redux';
+import Typography from '@mui/material/Typography';
 import { GoBack } from '../../components/modules/goBack';
 import {Item} from "../../theme";
 import {
@@ -28,11 +27,14 @@ export const AddBook:FC<InputForm> = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
-    const handleSubmit = (values,{ setSubmitting }) => {
-            addBook(values)
-            setSubmitting(false);
-            navigate(-1)
-        }
+    const handleSubmit = (
+      values: React.FormEvent<HTMLFormElement>,
+      { setSubmitting }
+    ) => {
+      addBook(values);
+      setSubmitting(false);
+      navigate(-1);
+    };
 
     useEffect(() => {
         if (selectedImage) {

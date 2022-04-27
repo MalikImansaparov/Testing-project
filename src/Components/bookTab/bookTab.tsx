@@ -3,14 +3,15 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { BookList } from '../../pages/bookList/bookList';
 import Grid from '@mui/material/Grid';
 import { FictionBooks } from '../../pages/bookList/fictionBooks';
 import { CustomButton } from '../../pages/bookList/style';
+import { InputForm } from '../bookTypes';
 
-export const BookTabs = () => {
-  const [value, setValue] = useState(0);
+export const BookTabs: FC<InputForm> = () => {
+  const [value, setValue] = useState<number>(0);
 
   interface TabPanelProps {
     children?: React.ReactNode;
@@ -37,7 +38,7 @@ export const BookTabs = () => {
     );
   }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
@@ -65,10 +66,10 @@ export const BookTabs = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <BookList title={''} description={''} prices={0} image={0} />
+          <BookList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FictionBooks title={''} description={''} prices={0} image={0} />
+          <FictionBooks />
         </TabPanel>
       </Grid>
     </Grid>

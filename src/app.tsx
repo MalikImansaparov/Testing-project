@@ -6,7 +6,6 @@ import { Navbar } from './components/header/header';
 import { useDispatch } from 'react-redux';
 import { fetchAllBooks, fetchFictionBooks } from './store/asyncAction';
 
-
 const App = () => {
   const dispatch = useDispatch();
   let localStore: any = localStorage.getItem('persist:root');

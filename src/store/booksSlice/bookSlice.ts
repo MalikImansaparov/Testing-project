@@ -7,8 +7,7 @@ const initialState: stateTypes = {
   book: null,
   favCount: null,
   favorite: [],
-  currentFavorite: []
-}
+};
 const bookSlice = createSlice({
   name: 'books',
   initialState,
@@ -21,35 +20,36 @@ const bookSlice = createSlice({
     },
     editBook(state, action) {
       state.books = state.books.map((item) =>
-          item.id === action.payload.id ? action.payload : item)
+        item.id === action.payload.id ? action.payload : item
+      );
     },
     clearBook(state) {
       state.book = null;
     },
     clearBooks(state) {
-      state.books = null;
+      state.books = [];
     },
     removeFavorite(state, action) {
-      state.favorite = state.favorite.filter((item) => item.id !== action.payload);
+      state.favorite = state.favorite.filter(
+        (item) => item.id !== action.payload
+      );
     },
     setItemInFavorite: (state, action) => {
-      state.favorite.push(action.payload)
+      state.favorite.push(action.payload);
     },
     deleteItemFromFavorite: (state, action) => {
-      state.favorite = state.favorite.filter(item => item.id !== action.payload)
+      state.favorite = state.favorite.filter(
+        (item) => item.id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllBooks.fulfilled,
-          (state, action) => {
-        state.books = action.payload;
-      })
-    builder
-        .addCase(fetchBookId.fulfilled,
-            (state, action) => {
-          state.book = action.payload;
-        })
+    builder.addCase(fetchAllBooks.fulfilled, (state, action) => {
+      state.books = action.payload;
+    });
+    builder.addCase(fetchBookId.fulfilled, (state, action) => {
+      state.book = action.payload;
+    });
   },
 });
 

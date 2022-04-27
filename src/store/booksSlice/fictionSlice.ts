@@ -7,8 +7,7 @@ const initialState: stateTypes = {
   book: null,
   favCount: null,
   favorite: [],
-  currentFavorite: []
-}
+};
 const fictionSlice = createSlice({
   name: 'fiction',
   initialState,

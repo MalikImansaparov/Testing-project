@@ -20,6 +20,7 @@ import { validationSchema } from '../../components/modules/validate';
 import {useTypedSelector} from "../../components/hooks/useTypedselector";
 import {useAction} from "../../components/hooks/useAction";
 import {fetchBookId} from "../../store/asyncAction";
+import {InputForm} from "../../components/bookTypes";
 
 export const EditBook: FC<InputForm> = () => {
   const navigate = useNavigate();
