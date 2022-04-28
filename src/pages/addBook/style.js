@@ -1,5 +1,6 @@
 import {styled} from "@mui/system";
 import Button from "@mui/material/Button";
+import {Box} from "@mui/material";
 
 export const PhotoWrapper = styled('span')`
   width: 230px;
@@ -36,4 +37,23 @@ export const CustomButton = styled(Button)`
     background-color: red;
   }
 `;
+
+export const ValidateMessage = styled(Box)`
+text-align: left,
+fontSize: 13px,
+color: error.main,
+margin-top: 12px,
+margin-top: 14px
+`
+
+export const FormStyle = styled(Box)`
+ margin-left: 30px,
+ margin-right: 30px,
+ display: grid,
+ justify-content: center,
+`
+export const SubmitStyle = styled(Box)`
+ display: grid,
+ justify-content: center,
+`
 

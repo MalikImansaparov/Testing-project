@@ -15,7 +15,7 @@ import {useNavigate} from "react-router";
 import Checkbox from "@mui/material/Checkbox";
 import {NavLink} from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
-import {InputForm} from "../../components/bookTypes";
+import {InputForm} from "../../types";
 import {useTypedSelector} from "../../components/hooks/useTypedselector";
 import {useAction} from "../../components/hooks/useAction";
 

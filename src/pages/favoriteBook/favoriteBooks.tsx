@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router";
 import {useTypedSelector} from "../../components/hooks/useTypedselector";
 import {useAction} from "../../components/hooks/useAction";
-import {InputForm} from "../../components/bookTypes";
+import {InputForm} from "../../types";
 
 export const FavoriteBooks:FC<InputForm> = () => {
     const navigate = useNavigate()

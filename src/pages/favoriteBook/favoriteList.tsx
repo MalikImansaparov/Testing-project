@@ -14,7 +14,7 @@ import {useNavigate} from "react-router";
 import CircularPreloader from '../../components/modules/preloader';
 import {useTypedSelector} from "../../components/hooks/useTypedselector";
 import {useAction} from "../../components/hooks/useAction";
-import {InputForm} from "../../components/bookTypes";
+import {InputForm} from "../../types";
 
 export const FavoriteList:FC<InputForm> = () => {
     const navigate = useNavigate();

@@ -20,17 +20,10 @@ import { validationSchema } from '../../components/modules/validate';
 import {useTypedSelector} from "../../components/hooks/useTypedselector";
 import {useAction} from "../../components/hooks/useAction";
 import {fetchBookId} from "../../store/asyncAction";
+import {FormStyle, SubmitStyle, ValidateMessage} from "../addBook/style";
+import {InputForm} from "../../types";
 
-type editTypes = {
-    id: number
-    title: string;
-    description: string;
-    prices: number;
-    image: number;
-}
-
-
-export const EditFiction:FC<editTypes> = () => {
+export const EditFiction:FC<> = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const productInfo = useTypedSelector((state) => state.fiction.book);
@@ -43,11 +36,19 @@ export const EditFiction:FC<editTypes> = () => {
         return () => clearBook();
     }, [id]);
 
-    const handleSubmit = (values, { setSubmitting }) => {
+    const handleSubmit = (values: InputForm,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void) => {
         editBook(values);
         setSubmitting(false);
         navigate(-1);
     };
+
+    const initialValues: InputForm = {
+        title: productInfo?.title,
+        image: productInfo?.image,
+        description: productInfo?.description,
+        price: productInfo?.price,
+};
 
     if (!productInfo) {
         return (
@@ -63,7 +64,7 @@ export const EditFiction:FC<editTypes> = () => {
             <Item sx={{ width: '1060px' }}>
                 <FormControl>
                     <Formik
-                        initialValues={productInfo}
+                        initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
                     >
@@ -79,13 +80,7 @@ export const EditFiction:FC<editTypes> = () => {
                           }) => (
                             <>
                                 <form onSubmit={handleSubmit}>
-                                    <Box
-                                        sx={{
-                                            my: '30px',
-                                            display: 'grid',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
+                                    <FormStyle>
                                         <label htmlFor="contained-button-file">
                                             <PhotoWrapper>
                                                 <InputWrap
@@ -114,19 +109,11 @@ export const EditFiction:FC<editTypes> = () => {
                                             </PhotoWrapper>
                                         </label>
                                         {errors.image && touched.image && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
+                                            <ValidateMessage>
                                                 {errors.image}
-                                            </Typography>
+                                            </ValidateMessage>
                                         )}
-                                    </Box>
+                                    </FormStyle>
                                     <Box sx={{ mb: '30px' }}>
                                         <LabelWrapper>Наименование</LabelWrapper>
                                         <InputWrapper
@@ -137,17 +124,9 @@ export const EditFiction:FC<editTypes> = () => {
                                             onBlur={handleBlur}
                                         />
                                         {errors.title && touched.title && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
+                                            <ValidateMessage>
                                                 {errors.title}
-                                            </Typography>
+                                            </ValidateMessage>
                                         )}
                                     </Box>
                                     <Box sx={{ mb: '30px' }}>
@@ -160,17 +139,9 @@ export const EditFiction:FC<editTypes> = () => {
                                             onBlur={handleBlur}
                                         />
                                         {errors.description && touched.description && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
+                                            <ValidateMessage>
                                                 {errors.description}
-                                            </Typography>
+                                            </ValidateMessage>
                                         )}
                                     </Box>
                                     <Box sx={{ mb: '30px' }}>
@@ -183,30 +154,17 @@ export const EditFiction:FC<editTypes> = () => {
                                             onBlur={handleBlur}
                                         />
                                         {errors.price && touched.price && (
-                                            <Typography
-                                                sx={{
-                                                    textAlign: 'left',
-                                                    fontSize: '13px',
-                                                    color: 'error.main',
-                                                    mt: '12px',
-                                                    ml: '14px',
-                                                }}
-                                            >
+                                            <ValidateMessage>
                                                 {errors.price}
-                                            </Typography>
+                                            </ValidateMessage>
                                         )}
                                     </Box>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                        }}
-                                    >
+                                    <SubmitStyle>
                                         <GoBack/>
                                         <CustomButton type="submit" disabled={isSubmitting}>
                                             Сохранить
                                         </CustomButton>
-                                    </Box>
+                                    </SubmitStyle>
                                 </form>
                             </>
                         )}

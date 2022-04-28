@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {fetchAllBooks, fetchBookId} from '../asyncAction';
-import {stateTypes} from './types'
+import {stateTypes} from '../../types'
 
 const initialState: stateTypes = {
   books: [],
