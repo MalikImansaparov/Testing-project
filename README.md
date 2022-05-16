@@ -1,6 +1,6 @@
 ## Books Libraries
 
-Demo: https://codifylib.netlify.app/
+<!-- Demo: https://codifylib.netlify.app/ -->
 
 ### Techonology
 - React
