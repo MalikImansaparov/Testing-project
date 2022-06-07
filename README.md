@@ -5,7 +5,7 @@
 ### Techonology
 - React
 - Typescript
-- Redux-tollkit
+- Redux-toolkit
 - Redux-persist
 - React-redux
 - React-router
