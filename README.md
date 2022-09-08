@@ -20,12 +20,12 @@
 ### Install
 Use the [git](https://git-scm.com/downloads) to clone the project to your local machine.
 ```sh
-$ git clone https://github.com/Books-Libraries.git
+$ git clone https://github.com/Testing-Ptoject.git
 ```
 
 Navigate to the extracted folder
 ```sh 
-cd Books-Libraries
+cd Testing-Ptoject
 ```
 
 Install the dependencies and modules
